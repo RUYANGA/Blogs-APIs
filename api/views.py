@@ -26,3 +26,25 @@ def createPost(request):
         return Response({"success":"POst created successful"},status=201)
     else:
         return Response(serializer.errors,status=400)
+    
+@api_view(['DELETE'])
+def deletePost(request):
+    postId=request.data.get('id')
+    try:
+        post=Post.objects.get(id=postId)
+        post.delete()
+        
+        return Response({'success':"Post deleted successful"})
+    except Post.DoesNotExist:
+        return Response({"Error":"The post does not exist"},status=404)
+    
+@api_view(['GET'])
+def getOne(request):
+    id=request.data.get('id')
+    try:
+        post=Post.objects.get(id=id)
+        serielizer=PostSerializer(post)
+        return Response(serielizer.data)
+    except Post.DoesNotExist:
+        return Response({"Error":"The post does not exist"},status=404)
+        
