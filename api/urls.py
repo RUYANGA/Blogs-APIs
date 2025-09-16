@@ -5,5 +5,6 @@ urlpatterns = [
     path('getposts/',views.getAllPosts),
     path("create/",views.createPost),
     path("delete/",views.deletePost),
-    path("getone/",views.getOne)
+    path("getone/",views.getOne),
+    path("update/",views.updatePost)
 ]

@@ -48,3 +48,21 @@ def getOne(request):
     except Post.DoesNotExist:
         return Response({"Error":"The post does not exist"},status=404)
         
+@api_view(['PUT'])
+def updatePost(request):
+    id=request.data.get('id')
+    new_title=request.data.get('title')
+    new_content=request.data.get('content')
+    
+    try:
+        post=Post.objects.get(id=id)
+        
+        if new_title:
+            post.title=new_title
+        if new_content:
+            post.content=new_content
+        post.save()
+        
+        return Response({"success":"Post updated successful"})        
+    except Post.DoesNotExist:
+        return Response({"Error":"The post does not exist"},status=404)
