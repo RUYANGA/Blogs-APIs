@@ -18,4 +18,11 @@ def getAllPosts(request):
 
 @api_view(['GET','POST'])
 def createPost(request):
+    data=request.data
+    serializer= PostSerializer(data=data)
     
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"success":"POst created successful"},status=201)
+    else:
+        return Response(serializer.errors,status=400)
